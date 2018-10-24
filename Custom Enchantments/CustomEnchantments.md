@@ -280,6 +280,43 @@ Triggers if this particular event has not be handled by the same enchantment on 
 	-condition:"first_trigger"
 ```
 
+
+<h4>In Biome</h4>
+
+Checks if the biome the user is in meets certain criteria
+
+```
+(a condition)
+	-condition:"in_biome"
+	-biome: Json Object containing various tags to match. All defined tags must match for the condition to pass.
+		-temperature_range: The temperature range the biome must fall in
+			-min: The minimum temperature. Defaults to -Infinity
+			-max: The maximum temperature. Defaults to Infinity
+		-biome_name: Checks if the biome is either a specific biome or one of a list of biomes.
+		-has_rain: Checks if the biome can rain or cannot.
+		-has_snow: Checks if the biome can snow or cannot.
+```
+
+<h4>Weather</h4>
+
+Checks the current weather
+
+```
+(a condition)
+	-condition:"weather"
+	-weather: The weather that must be occuring, or a list of such. If a list is provided, passes if the weather is any of those weathers. Acceptable values are "rain", "storm", and "clear". 
+```
+
+<h4>In Block</h4>
+
+Checks if the user is in a particular type of block. Specifically checks if at least 1 of the 8 blocks the user can be inside of matches
+
+```
+(a condition)
+	-condition:"in_block"
+	-block_state: The block state to match against. Same as similar block_state objects used by advancement criteria
+```
+
 <h3>Global Effects</h3>
 
 These effects, like the global conditions, can be applied regardles of the trigger being used. These usually only apply to the user. 
@@ -299,8 +336,317 @@ Adds a particular status effect to the user.
 	-hide_particles: Set to true if the particles are hidden. Optional, defaults to false.
 ```
 
+<h4>Heal User</h4>
+
+Heals the user by a particular ammount. Undead entities recieve *1.5 damage instead.
+
+```
+(an effect)
+	-effect:"heal_user"
+	-amount: The amount (in half hearts) to heal the user by. Can be absolute or modified
+```
+
+<h4>Harm User</h4>
+
+Inflicts an amount of damage to the user. Undead entities heal by *0.67 instead, unless the entity is immune.
+
+```
+(an effect)
+	-effect:"harm_user"
+	-amount: The ammount of damage to deal. Can be absolute or modified.
+	-damage_type: The type of damage dealt by the Enchantment. Defaults to the magic damage dealt by harming potions
+		-death_message: The death message to display when a player dies to the damage
+		-bypasses_armor: True if the damage is not reduced by armor. Defaults to false
+		-bypasses_magic: True if the damage is not reduced by enchantments. Defaults to false
+		-bypasses_invulnerability: True if the damage can be dealt to invulnerable targets. Defaults to false
+		-is_fire: True if this is fire damage. Defaults to false
+		-is_explosion: True if this explosion damage. Defaults to false
+		-is_magic: True if this is magic damage. Defaults to true
+		-is_projectile: True if this is projectile damage. Defaults to false.
+```
+
+<h4>Damage User</h4>
+
+Inflicts damage of a particular type to the user. 
+
+```
+(an effect)
+	-effect:"damage_user"
+	-amount: The amount of damage to deal. Can be absolute or modified
+	-damage_type: The type of damage to deal.
+		-death_message: The death message to display when a player dies to the damage
+		-bypasses_armor: True if the damage is not reduced by armor. Defaults to false
+		-bypasses_magic: True if the damage is not reduced by enchantments. Defaults to false
+		-bypasses_invulnerability: True if the damage can be dealt to invulnerable targets. Defaults to false
+		-is_fire: True if this is fire damage. Defaults to false
+		-is_explosion: True if this explosion damage. Defaults to false
+		-is_magic: True if this is magic damage. Defaults to false
+		-is_projectile: True if this is projectile damage. Defaults to false.
+```
+
+<h4>Ignite User</h4>
+
+Sets or increases the fire ticks of the user, unless the user is immune to fire. 
+
+```
+(an effect)
+	-effect:"ignite_user"
+	-time: The number of fire ticks to add to the user. Can be absolute or modified
+```
+
+<h4>Strike User</h4>
+
+If the user is exposed to the sky, strikes the user with lightning. 
+
+```
+(an effect)
+	effect:"strike_user"
+```
 
 
 
+<h3>Tick Trigger</h3>
+
+Event fired 20 times per second, or after a set period of time
+
+```
+(a trigger)
+	-trigger:"tick"
+	-delay: The number of ticks before the next event is fired. Can be absolute or modified. 
+```
+
+<h3>Item Equipped</h3>
+
+Event fired when an item with the enchantment is added to an applicable item slot, except from another applicable item slot of the same entity.  
+
+```
+(a trigger)
+	-trigger:"equipped"
+```
+
+<h3>Item Unequipped</h3>
+
+Event fired when the item with the enchantment is removed from an applicable item slot, unless it is added to another applicable item slot of the same entity. 
+
+```
+(a trigger)
+	-trigger:"unequipped"
+```
+
+<h3>Entity Attacked</h3>
+
+Fired when the user deals damage to an entity. 
+
+```
+(a trigger)
+	-trigger:"entity_attacked"
+```
+
+<h4>Applicable Conditions</h4>
+
+The following conditions apply to `entity_attacked` triggers.
+
+<h5>Target Entity</h5>
+
+Checks the entity that was dealt damage. 
+
+```
+(a condition)
+	-condition:"entity_data"
+	-entity: The Json representation of an entity. Same as similar fields in enchantment criteria. 
+```
+
+<h5>Target Entity Type</h5>
+
+Checks the entity type of the damaged entity.
+
+```
+(a condition)
+	-condition:"entity_type"
+	-entity_types: A list of entity types. Can contain any of "normal", "undead", "arthropod", and "aquatic". Passes if the entity is at least one of these types
+```
+
+<h4>Applicable Effects</h4>
+
+The following effects can be applied from `entity_attacked` triggers
+
+<h5>Heal Target</h5>
+
+Same as similar `heal_user` effect, except applies to the attacked entity rather then the user.  
+
+```
+(an effect)
+	-effect:"heal_target"
+	...
+```
+
+<h5>Harm Target</h5>
+
+Same as similar `harm_user` effect, except applies to the attacked entity rather then the user. 
+
+```
+(an effect)
+	-effect:"harm_target"
+	...
+```
+
+<h5>Damage Target</h5>
+
+Same as similar `damage_user` effect, except applies to the attacked entity rather then the user.
+
+```
+(an effect)
+	-effect:"damage_target"
+	...
+```
+
+<h5>Add Damage</h5>
+
+Modifies the damage dealt by an additive factor
+
+```
+(an effect)
+	-effect:"add_damage"
+	-amount: The amount to increase the damage by. Can be absolute or modified.
+```
+
+<h5>Modify Damage</h5>
+
+Modifies the damage dealt by a multiplicative factor
+
+```
+(an effect)
+	-effect:"modify_damage"
+	-modifier: The ammount to modify the damage by. Can be absolute or modified.
+```
+
+<h5>Ignite Target</h5>
+
+Adds an amount of fire ticks to the target of the attack.  Similar to the `ignite_user` effect.
+
+```
+(an effect)
+	-effect:"ignite_target"
+	...
+```
+
+<h5>Strike Target</h5>
+
+If the target is exposed to the sky, strikes the target with lightning. Similar to the `strike_user` effect.
+
+```
+(an effect)
+	-effect:"strike_target"
+	...
+```
+
+
+<h3>User Damaged</h3>
+
+Fired whenever a source deals damage to the user.
+
+```
+(a trigger)
+	-trigger:"user_damaged"
+```
+
+<h4>Applicable Conditions</h4>
+
+The following conditions can be applied from `user_damaged` triggers. 
+
+<h5>Damage Source</h5>
+
+Checks the source of the damage
+
+```
+(a condition)
+	-condition:"damage_source"
+	-entity: The entity which was the original source of the damage. Same as similar entity tags used in advancement criteria.
+	-direct_entity: The entity which actually dealt the damage (the projectile if that was the type of damage). Same as similar entity tags used in advancement criteria.
+	-damage_type: The type of damage dealt. Same as similar damage_type tags used in advancement criteria.
+```
+
+<h4>Applicable Effects</h4>
+
+<h5>Add Damage</h5>
+
+The `add_damage` effect applies to `user_damaged` triggers.
+
+<h5>Modify Damage</h5>
+
+The `modify_damage` effect applies to `user_damaged` triggers.
+
+<h3>User Attacked</h3>
+
+Fired whenever an entity attacks the user. 
+
+```
+(a trigger)
+	-trigger:"user_attacked"
+```
+
+<h4>Applicable Conditions</h4>
+
+<h5>Source Entity</h5>
+
+The `entity_data` condition applies to `user_attacked` triggers. Checks the source entity rather then the target entity.
+
+<h5>Source Entity Type</h5>
+
+The `entity_type` condition applies to `user_attacked` triggers. Checks the source entity rather then the target entity.
+
+<h5>Damage Source</h5>
+
+The `damage_source` condition applies to `user_attacked` triggers. 
+
+<h4>Applicable Effects</h4>
+
+<h5>Heal/Harm/Damage Source</h5>
+
+Heals/Harms/Damages the source entity by a given amount. Similar to the `heal_user`, `harm_user`, and `damage_user` effects respectively.
+
+Heal Source:
+
+```
+(an effect)
+	-effect:"heal_source"
+	...
+```
+
+Harm Source:
+
+```
+(an effect)
+	-effect:"harm_source"
+	...
+```
+
+Damage Source:
+
+```
+(an effect)
+	-effect:"damage_source"
+	...
+```
+
+<h5>Ignite/Strike Source</h5>
+
+Ignites/Strikes the source with lighting. Similar to the `ignite_user` and `strike_user` effects, respectively.
+
+Ignite Source:
+
+```
+(an effect)
+	-effect:"ignite_source"
+	...
+```
+
+Strike Source:
+
+```
+(an effect)
+	-effect:"strike_source"
+	...
+```
 
 

@@ -496,6 +496,16 @@ If the user is exposed to the sky, strikes the user with lightning.
 	effect:"strike_user"
 ```
 
+<h4>Run Function</h4>
+
+Runs a given function as though the server executed execute as *user* *position (see below)* run function *function*
+
+```
+(an effect)
+	effect:"run_function"
+	function:A function name or tag
+```
+
 
 
 <h3>Tick Trigger</h3>

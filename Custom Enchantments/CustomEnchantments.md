@@ -463,7 +463,7 @@ Checks the entity type of the damaged entity.
 ```
 (a condition)
 	-condition:"entity_type"
-	-entity_types: A list of entity types. Can contain any of "normal", "undead", "arthropod", and "aquatic". Passes if the entity is at least one of these types
+	-entity_types: A list of entity types. Can contain any number of entity tags, without the # prefix.
 ```
 
 <h4>Applicable Effects</h4>

@@ -1,23 +1,12 @@
-#Hooking Events with functions
+<h1>Datapack Initialization</h1>
 
-This proposal adds the ability to hook various events to run a list of functions with a particular tag. 
-
-
+This proposal adds the ability to set "one time initialization" functions for a datapack, as well as depend on other datapacks. 
 
 
-##How to hook events
-Events are bound to a set of function tags.
 
-When a given event is raised all functions tagged with the appropriate event tag are executed in a particular manner, 
-depending on the kind of event. 
 
-All events are executed with elevated permissions, at and as the appropriate entity (if applicable)
 
-##Events
-
-These are the events that are hookable by functions in this proposal
-
-###Datapack Initialization
+<h3>Datapack Initializers</h3>
 
 Minecraft already provides the ability to check when a datapack is loaded. 
 However certain initialization really should only be performed once per world load. 

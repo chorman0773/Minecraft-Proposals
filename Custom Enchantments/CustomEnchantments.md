@@ -141,20 +141,97 @@ Enchantments would use the following structure:
 		-repair_cost: The ammount to increase the repair cost of enchanted items by. Can be an absolute or modified quantity. Optional. Defaults to The modified quantity {"base":1,"modifier":1}. 
 		-applicable_slots: The set of slots where the enchantment triggers can be signalled in, and where the attribute modifiers apply in. Optional. If undefined or an empty array, computes the slot as specified below. Each value may be a slot name (see below).
 		-weight: The weight of the enchantment at a particular level, for both enchanting tables, and for "enchant_randomly" tags.
+		-quality: The weight modifier for "enchant_randomly" tags.
 ```
 
 <h2>Enchanting Level Slots</h2>
 
-In this proposal, enchantment tables now operate on slots, rather than levels. At the gameplay level, there is no apparent difference, the change is only to make interacting with enchantment tables easier. By default, the Enchanting level slot is 7 and increases by 1 per level. The maximum slot is 17. The "Enchantment Table selections" are built by taking an enchantment at Enchanting level slot, then with a 67% chance, adding an additional enchantment at the slot-2, until a slot based maximum number of enchantments is added, no enchantment is added, or the enchantment to be added cannot be added in conjunction with the other enchantments. It will only pick from enchantments applicable to the item. 
+In this proposal, enchantment tables now operate on slots, rather than levels. At the gameplay level, there is no apparent difference, the change is only to make interacting with enchantment tables easier. By default, the Enchanting level slot is 7 and increases by 1 per level. The maximum slot is 17. The "Enchantment Table selections" are built by taking an enchantment at Enchanting level slot, then with a 67% chance, adding an additional enchantment at the slot-2, until a slot based maximum number of enchantments is added, no enchantment is added, or the enchantment to be added cannot be added in conjunction with the other enchantments. It will only pick from enchantments applicable to the item. Enchantments with slots greater than 17 or less than 0 cannot be added in an enchanting table. 
 
 <table>
 	<tr>
-		<td>Slot</td>
-		<td>Minimum Enchanting Level</td>
-		<td>Maximum Enchantment Count</td>
-		<td>Maximum Enchanting Level</td>
+		<th>Slot(s)</th>
+		<th>Enchanting Levels</th>
+		<th>Max Enchantments</th>
+	</tr>
+	<tr>
+		<td>0-2</td>
+		<td>1-4</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>3-5</td>
+		<td>3-7</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>6-8</td>
+		<td>6-10</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>9-10</td>
+		<td>10-15</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>11-12</td>
+		<td>13-18</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>13-14</td>
+		<td>15-20</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>17-23</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>21-29</td>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>30</td>
+		<td>6</td>
 	</tr>
 </table>
+
+I also propose that the following functions maps the number of nearby bookshelves, and the enchantment table slot to the enchanting levels.
+
+```
+Given that s is the slot index (1 for the first Selection Slot, 2 for second, 3 for third), and v is the slot value (0 for first slot, 0.25 for second, 0.5 for third), compute k
+k=(s(v+1)/3 + s(v+0.75)/3 + s(v+0.5)/3)/2
+Then using the computed k, and B for the number of bookshelves
+lmin = floor(Bk)+1
+lmax = floor(Bk+0.875)+s
+```
+
+The k table is given as follows:
+
+<table>
+	<tr>
+		<th>Slot</th>
+		<th>k</th>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>0.375</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>1.083</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>1.875</td>
+	</tr>
+</table>
+
 
 
 

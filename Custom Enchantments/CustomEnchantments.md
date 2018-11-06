@@ -123,7 +123,7 @@ Enchantments would use the following structure:
     -description: The description string/text component. Has no meaning presently.
     -enchantment_weight: The weight to add this enchantment to an item, either from an enchanting table, or with the enchant_randomly loot table function. Defaults to 1
     -mutex_enchantments: The set of enchantments which the enchantment cannot be applied along side of. Defaults to an empty set. 
-    -enchantment_level_slot: The level slot the enchantment is in when generating enchantments. Defaults to 7. The slot is increased by 1 for each level above 1 of the enchantment. Only has meaning if max_table_level is at least 1. See below for the meaning of each slot. 
+    -enchantment_level_slot: The level slot the enchantment is in when generating enchantments. Modified quantity, but may be given as an absolute quantity. If given as an absolute quantity, the modifier is treated as 1. The default is the modified quantity given by {"base":7,"modifier":1}. 
     -attributes: The list of attribute modifiers to add to the enchanted item
     	-(an attribute modifier)
     		-attribute: The attribute name, like generic.movementSpeed. 
@@ -140,7 +140,23 @@ Enchantments would use the following structure:
 					-effect: The effect name. See list below
 		-repair_cost: The ammount to increase the repair cost of enchanted items by. Can be an absolute or modified quantity. Optional. Defaults to The modified quantity {"base":1,"modifier":1}. 
 		-applicable_slots: The set of slots where the enchantment triggers can be signalled in, and where the attribute modifiers apply in. Optional. If undefined or an empty array, computes the slot as specified below. Each value may be a slot name (see below).
+		-weight: The weight of the enchantment at a particular level, for both enchanting tables, and for "enchant_randomly" tags.
 ```
+
+<h2>Enchanting Level Slots</h2>
+
+In this proposal, enchantment tables now operate on slots, rather than levels. At the gameplay level, there is no apparent difference, the change is only to make interacting with enchantment tables easier. By default, the Enchanting level slot is 7 and increases by 1 per level. The maximum slot is 17. The "Enchantment Table selections" are built by taking an enchantment at Enchanting level slot, then with a 67% chance, adding an additional enchantment at the slot-2, until a slot based maximum number of enchantments is added, no enchantment is added, or the enchantment to be added cannot be added in conjunction with the other enchantments. It will only pick from enchantments applicable to the item. 
+
+<table>
+	<tr>
+		<td>Slot</td>
+		<td>Minimum Enchanting Level</td>
+		<td>Maximum Enchantment Count</td>
+		<td>Maximum Enchanting Level</td>
+	</tr>
+</table>
+
+
 
 <h2>Applicable Slots</h2>
 
@@ -161,7 +177,7 @@ The slot names used are as follows:
 
 The set of applicable slots of an item is based on the item tags of that item, using the following rules:
 <ul>
-<li>If the item does not have minecraft:armor, then the set includes the mainhand</li>
+<li>If the item does not have minecraft:wearable, then the set includes the mainhand</li>
 <li>If the item has minecraft:offhand, then the set includes the offhand</li>
 <li>If the item has minecraft:headgear, then the set includes the helmet slot</li>
 <li>If the item has minecraft:chest_wearable, then the set includes the chestplate slot</li>

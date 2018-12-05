@@ -3,6 +3,16 @@
 This document details how custom enchantments are defined (as well as enchantment tags).
 
 
+<h2>Advancement Predicates</h2>
+
+To damage_type's, add the following fields
+
+```
+(a damage_type)
+	...
+	is_fall: Checks if the damage was caused by falling or an ender peral
+	is_impact: Checks if the damage was caused by flying into a wall too fast
+```
 
 <h2>Enchantment Tags</h2>
 
@@ -23,13 +33,14 @@ minecraft:curse -> Curse Enchantments(minecraft:vanishing_curse and minecraft:bi
 minecraft:sharpness -> Sharpness and mutex with sharpness (minecraft:sharpness, minecraft:smite, minecraft:bane_of_arthropods)
 minecraft:protection -> Protection enchantments (minecraft:protection, minecraft:projectile_protection, minecraft:fire_protection, minecraft:blast_protection)
 minecraft:thorns -> Thorns type enchantments (presently only contains minecraft:thorns)
+minecraft:treasure -> Enchantments which can appear in villager trades and fishing loot, and can be used in loot tables. 
 ```
 
 <h3>Enchantment Tags in Datapacks</h3>
 
 Enchantment Tags may appear whenever a list of named enchantments are expected, prefixed with a #. 
 These may be used in `mutex_enchantments`, and in `loot_tables` with the `enchant_randomly` function. This is per the proposal. 
-Enchantment tags may also refer to other tags in this manner. An enchantment may not declare a circular reference (that is, and enchantment tag which references itself). 
+Enchantment tags may also refer to other tags in this manner. An enchantment may not declare a circular reference (that is, an enchantment tag which references itself). 
 
 
 If `enchant_randomly` is with a tag, the tag selectively expands. Specifically, it expands to the set of enchantments that have the tag, and can apply to that item. If an enchantment is already present in the list of enchantments to add, the enchantment is not included in the tag expansion. 
@@ -59,7 +70,7 @@ The following new item tags can be added, to make creating custom enchantments e
 <li>minecraft:hoe -> All hoes</li>
 <li>minecraft:tool -> All Tools that can be damaged. Specifically all items in minecraft:pickaxe, minecraft:axe, minecraft:shovel, minecraft:hoe, as well as minecraft:shears</li>
 <li>minecraft:damagable -> All items that can be damaged. Specifically all items in minecraft:armor, minecraft:tool, and minecraft:shield</li>
-<li>minecraft:offhand -> All items in minecraft:ranged_weapon and 
+<li>minecraft:offhand -> All items in minecraft:ranged_weapon and minecraft:hoe, as well as minecraft:shield, and minecraft:sheers</li>
 </ul>
 
 
@@ -90,26 +101,37 @@ Most numbers in enchantment effects and conditions can be either absolute or mod
 
 Absolute quantities are just json numbers. These quantities are not affected by the enchantment level. 
 
-Modified quantities are special json structures. These quantities are affected by the enchantments level. A modified quantity with a `max_level` field set to 1 is useless, and can be treated as an absolute quantity with the given `base` field. 
+Modified quantities are special json structures. These quantities are affected by the enchantments level. A modified quantity with a `max_level` field set to 1 is useless, and is treated as an absolute quantity with the given `base` field, even if the actual level of the enchantment is greater than 1(achievable through commands or save editing). 
+
 
 
 Modified quantities use the following format
 
 ```
 (a quantity)
-	-base: The value of the quantity, with the enchantment level at 1.
-	-modifier: The value the quantity is increased by for each level above 1.
+	-function: The Function to apply (linear, quadratic, rational). Optional, defaults to linear
+	-base: The b value for the quantity
+	-modifier: The m value for the quantity
 ```
 
-Modified quantities are linear functions of x being the level of the enchantment. 
-Given:
-<ul>
-<li>x, the level of the enchantment, at least 1</li>
-<li>b, the base value of the modified quantity</li>
-<li>m, the modifier of the modified quantity</li>
-</ul>
 
-One can define the resultant value for the a given level as `f(x)=m(x-1)+b`. 
+
+By default Modified quantities are linear functions. However, the `function` parameter may choose one of the 3 predefined functions. At least 1 field must be provided in a modified quantity. 
+
+Given:
+
+* x, the level of the enchantment, at least 1.
+* b, the base value of the modified quantity. Defaults to 1
+* m, the modifier of the modified quantity. Defaults to 1
+* y, the result of the quantity function
+
+The function for computing the value of the quantity is given as follows:
+
+* for linear quantities: y = m(x-1)+b
+* for quadratic quantities: y = m(x-1)^2+b
+* for rational quantities: y = m(x/(x+b))
+
+
 
 
 <h3>Enchantment Structure</h3>
@@ -707,14 +729,14 @@ The `add_damage` effect applies to `user_damaged` triggers.
 
 The `modify_damage` effect applies to `user_damaged` triggers.
 
-<h5>Protect User</h5>
+<h5>Reduce Damage</h5>
 
 Applies a protection effect based on a protection factor. This may be more useful then `modify_damage` in most circumstances. 
 The Enchantment Protection Factor (EPF) is used as specified at <https://minecraft.gamepedia.com/Armor#Enchantments>.
 
 ```
 (an effect)
-	-effect:"protect_user"
+	-effect:"reduce_damage"
 	-factor: An absolute or modified quantity that modifies the EPF
 ```
 
@@ -816,13 +838,48 @@ Modifies the power of the projectile,
 
 <h5>Ignite Projectile</h5>
 
-Same same as `ignite_user`, `ignite_target`, and `ignite_source` effects, but applies to the projectile. 
+Same as `ignite_user`, `ignite_target`, and `ignite_source` effects, but applies to the projectile. 
 
 ```
 (an effect)
 	-effect:"ignite_projectile"
 	...
 ```
+
+<h3>Item Damaged</h3>
+
+Applies whenever the item is damaged. 
+
+```
+(a trigger):
+	-trigger:"item_damaged"
+	...
+```
+
+<h4>Applicable Conditions</h4>
+
+<h5>Item</h5>
+
+Checks the item that was damaged, before it was damaged. 
+
+```
+(a condition):
+	-condition:"item"
+	-item: An item predicate. Same as similar predicates for advancements.
+```
+
+<h4>Applicable Effects</h4>
+
+<h5>Negate Damage</h5>
+
+Stops the item from losing durability
+
+```
+(an effect):
+	-effect:"negate_damage"
+```
+
+
 
 
 <h2>Vanilla Datapack Additions</h2>
@@ -875,10 +932,30 @@ The following files are proposed to be added to the vanilla datapack, to transit
 				/protection.json
 				/sharpness.json
 				/thorns.json
+				/treasure.json
 			/entity_types
 				/undead.json
 				/aquatic.json
 				/arthropod.json
 			/items
-				
+				/sword.json
+				/projectile_weapon.json
+				/ranged_weapon.json
+				/weapon.json
+				/pickaxe.json
+				/axe.json
+				/shovel.json
+				/hoe.json
+				/tool.json
+				/offhand.json
+				/helmet.json
+				/head_wearable.json
+				/chestplate.json
+				/chest_wearable.json
+				/leggings.json
+				/boots.json
+				/armor.json
+				/wearable.json
+				/damagable.json
 ```
+

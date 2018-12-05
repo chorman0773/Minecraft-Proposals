@@ -1,0 +1,32 @@
+{
+	"name":{"translate":"enchantments.minecraft.projectile_protection"},
+	"description":{"translate":"enchantments.minecraft.projectile_protection.description"},
+	"applicable_items":["#minecraft:boots"],
+	"enchantable_items":["#minecraft:boots"],
+	"triggers":{
+		"main":{
+			"trigger":"user_damaged",
+			"conditions":[
+				{
+					"condition":"damage_source",
+					"damage_type":{
+						"is_fall":true
+					}
+				}
+			],
+			"effects":[
+				{
+					"effect":"reduce_damage",
+					"factor":{
+						"base":3,
+						"modifier":3
+					}
+				}
+			]
+		}
+	},
+	"enchantment_weight":5,
+	"enchantment_level_slot":9,
+	"max_level":4,
+	"max_table_level":3
+}

@@ -1,0 +1,25 @@
+{
+	"name":{"translate":"enchantments.minecraft.protection"},
+	"description":{"translate":"enchantments.minecraft.protection.description"},
+	"applicable_items":["#minecraft:armor"],
+	"enchantable_items":["#minecraft:armor"],
+	"mutex_enchantments":["#minecraft:protection"],
+	"triggers":{
+		"main":{
+			"trigger":"user_damaged",
+			"effects":[
+				{
+					"effect":"reduce_damage",
+					"factor":{
+						"base":1,
+						"modifier":1
+					}
+				}
+			]
+		}
+	},
+	"enchantment_weight":10,
+	"enchantment_level_slot":5,
+	"max_level":4,
+	"max_table_level":3
+}

@@ -1,0 +1,33 @@
+{
+	"name":{"translate":"enchantments.minecraft.bast_protection"},
+	"description":{"translate":"enchantments.minecraft.bast_protection.description"},
+	"applicable_items":["#minecraft:armor"],
+	"enchantable_items":["#minecraft:armor"],
+	"mutex_enchantments":["#minecraft:protection"],
+	"triggers":{
+		"main":{
+			"trigger":"user_damaged",
+			"conditions":[
+				{
+					"condition":"damage_source",
+					"damage_type":{
+						"is_explosion":true
+					}
+				}
+			],
+			"effects":[
+				{
+					"effect":"reduce_damage",
+					"factor":{
+						"base":2,
+						"modifier":2
+					}
+				}
+			]
+		}
+	},
+	"enchantment_weight":5,
+	"enchantment_level_slot":9,
+	"max_level":4,
+	"max_table_level":3
+}

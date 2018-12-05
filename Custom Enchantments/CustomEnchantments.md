@@ -314,6 +314,8 @@ Assassinate (gac14:instant_death_blade)
 Fire Aspect II (minecraft:fire_aspect)
 ```
 
+Assassinate is a custom enchantment written with this proposal, that has a 1 in 65536 chance of instantly killing the target (using the `damage_target` effect), it is not explicitly part of this Proposal, it is simply included here for exposition purposes.  
+
 With the first sword, the fire aspect enchantment applies first, and sets/adds fire ticks to the target. Then the Assassinate effect applies. If the Assassinate effect does activate, the entity will be on fire (unless it was immune), which may change resultant loot. 
 
 With the second sword, the Assassinate effect applies first. If it does activate, then the target entity will be killed. Then when Fire Aspect evalutates, it fails because the target entity is dead. This means that if the Assassinate effect does activate, the entity will not be on fire, meaning that the resultant loot may change. 
@@ -506,7 +508,13 @@ Runs a given function as though the server executed execute as *user* *position 
 	function:A function name or tag
 ```
 
+<h3>Null Trigger</h3>
+Event is never fired. Can be useful for writing vanilla enchantments that require internal support, as all enchantments defined using this proposal require either at least one trigger, or at least one attribute modifier
 
+```
+(a trigger)
+	-trigger:"null"
+```
 
 <h3>Tick Trigger</h3>
 
@@ -515,7 +523,7 @@ Event fired 20 times per second, or after a set period of time
 ```
 (a trigger)
 	-trigger:"tick"
-	-delay: The number of ticks before the next event is fired. Can be absolute or modified. 
+	-delay: The number of ticks before the next event is fired. Can be absolute or modified. Optional, defaults to 1.
 ```
 
 <h3>Item Equipped</h3>
@@ -751,6 +759,7 @@ Strike Source:
 	-effect:"strike_source"
 	...
 ```
+
 
 
 

@@ -1,4 +1,4 @@
-<h1>Custom Enchantments</h1>
+# Custom Enchantments #
 
 This document details how custom enchantments are defined (as well as enchantment tags).
 

@@ -1,0 +1,20 @@
+{
+	"name":{"translate":"enchantments.minecraft.sharpness"},
+	"description":{"translate":"enchantments.minecraft.sharpness.description"},
+	"max_level":5,
+	"max_table_level":4,
+	"enchantment_level_slot":6,
+	"enchantment_weight":7,
+	"applicable_items":["#minecraft:sword","#minecraft:axe"],
+	"enchantable_items":["#minecraft:sword"],
+	"mutex_enchantments":["minecraft:smite","minecraft:bane_of_arthropods"],
+	"attributes":[
+		{
+			"attribute":"generic.attackDamage",
+			"modifier":{
+				"base":1,
+				"modifier":0.5
+			}
+		}
+	]
+}

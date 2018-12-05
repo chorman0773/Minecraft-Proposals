@@ -1,0 +1,21 @@
+{
+	"name":{"translate":"enchantments.minecraft.smite"},
+	"description":{"translate":"enchantments.minecraft.smite.description"},
+	"applicable_items":["#minecraft:sword","#minecraft:axe"],
+	"enchantable_items":["#minecraft:sword"],
+	"max_level":5,
+	"max_table_level":4,
+	"enchantment_level_slot":8,
+	"weight":5,
+	"triggers":{
+		"main":{
+			"trigger":"entity_attacked",
+			"conditions":[
+				{
+					"condition":"entity_type",
+					"type":["minecraft:undead"]
+				}
+			]
+		}
+	}
+}

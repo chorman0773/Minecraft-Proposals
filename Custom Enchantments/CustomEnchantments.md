@@ -135,13 +135,13 @@ Enchantments would use the following structure:
     		-conditions: The list of conditions that must be fulfilled for effects subscribed to this event to apply.
    				-(a condition)
    					-condtion: The condition type. See below
-			-effects: A list of conditions to apply when the event is raised
-				-(an effect)
-					-effect: The effect name. See list below
-		-repair_cost: The ammount to increase the repair cost of enchanted items by. Can be an absolute or modified quantity. Optional. Defaults to The modified quantity {"base":1,"modifier":1}. 
-		-applicable_slots: The set of slots where the enchantment triggers can be signalled in, and where the attribute modifiers apply in. Optional. If undefined or an empty array, computes the slot as specified below. Each value may be a slot name (see below).
-		-weight: The weight of the enchantment at a particular level, for both enchanting tables, and for "enchant_randomly" tags.
-		-quality: The weight modifier for "enchant_randomly" tags.
+		-effects: A list of conditions to apply when the event is raised
+			-(an effect)
+				-effect: The effect name. See list below
+	-repair_cost: The ammount to increase the repair cost of enchanted items by. Can be an absolute or modified quantity. Optional. Defaults to The modified quantity {"base":1,"modifier":1}. 
+	-applicable_slots: The set of slots where the enchantment triggers can be signalled in, and where the attribute modifiers apply in. Optional. If undefined or an empty array, computes the slot as specified below. Each value may be a slot name (see below).
+	-weight: The weight of the enchantment at a particular level, for both enchanting tables, and for "enchant_randomly" tags.
+	-quality: The weight modifier for "enchant_randomly" tags. May not exist
 ```
 
 <h2>Enchanting Level Slots</h2>

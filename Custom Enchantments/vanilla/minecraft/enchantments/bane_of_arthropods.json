@@ -1,6 +1,6 @@
 {
-	"name":{"translate":"enchantments.minecraft.smite"},
-	"description":{"translate":"enchantments.minecraft.smite.description"},
+	"name":{"translate":"enchantments.minecraft.bane_of_arthropods"},
+	"description":{"translate":"enchantments.minecraft.bane_of_arthropods.description"},
 	"applicable_items":["#minecraft:sword","#minecraft:axe"],
 	"enchantable_items":["#minecraft:sword"],
 	"mutex_enchantments":["#minecraft:sharpness"],

@@ -7,14 +7,15 @@
 	"enchantment_weight":7,
 	"applicable_items":["#minecraft:sword","#minecraft:axe"],
 	"enchantable_items":["#minecraft:sword"],
-	"mutex_enchantments":["minecraft:smite","minecraft:bane_of_arthropods"],
+	"mutex_enchantments":["#minecraft:sharpness"],
 	"attributes":[
 		{
 			"attribute":"generic.attackDamage",
 			"modifier":{
 				"base":1,
 				"modifier":0.5
-			}
+			},
+			"operation":0
 		}
 	]
 }

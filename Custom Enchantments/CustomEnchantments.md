@@ -15,11 +15,14 @@ A circular reference is illegal, as is the same enchantment explicitly occuring 
 
 <h3>Defined Tags</h3>
 
-I propose to add the following vanilla enchantment tag 
+I propose to add the following vanilla enchantment tags 
 
 
 ```
-minecraft:curse
+minecraft:curse -> Curse Enchantments(minecraft:vanishing_curse and minecraft:binding_curse)
+minecraft:sharpness -> Sharpness and mutex with sharpness (minecraft:sharpness, minecraft:smite, minecraft:bane_of_arthropods)
+minecraft:protection -> Protection enchantments (minecraft:protection, minecraft:projectile_protection, minecraft:fire_protection, minecraft:blast_protection)
+minecraft:thorns -> Thorns type enchantments (presently only contains minecraft:thorns)
 ```
 
 <h3>Enchantment Tags in Datapacks</h3>
@@ -508,6 +511,23 @@ Runs a given function as though the server executed execute as *user* *position 
 	function:A function name or tag
 ```
 
+*user* is an entity selector or entity name which names the user entity. 
+
+*position* depends on the function trigger:
+* for `entity_attacked` and `user_attacked` triggers, *position* is given to be `at ` *entity*, where *entity* is the target for `entity_attacked` and source for `user_attacked` triggers. 
+* for `projectile_landed` and `block_broken` triggers, *position* is given to be `positioned at` *pos* where pos the position of the projectile or broken block respectively. 
+* for any other trigger, *position* is `at` *user*.
+
+Notes:
+* The function is to be executed with permission level 4. On servers that use Spigot Permission system, the function is executed with all permissions defined on the server. On servers that use the Gac14 Permission Management System, the function is run in an elevated context. It is unspecified how any other permission system acts in response to this trigger. See associated documentation for each permission system on the precise effects of running the function this way. On single-player, the function is run as though cheats are enabled. 
+* The execute command is for exposition only.  It is unspecified how this function is run, but the command must be run as the user, and positioned as above. 
+* The command chain max applies to the function as a separate chain, even if the trigger applied as the result of a command.  
+
+<h4>Repel User</h4>
+
+
+
+
 <h3>Null Trigger</h3>
 Event is never fired. Can be useful for writing vanilla enchantments that require internal support, as all enchantments defined using this proposal require either at least one trigger, or at least one attribute modifier
 
@@ -687,9 +707,21 @@ The `add_damage` effect applies to `user_damaged` triggers.
 
 The `modify_damage` effect applies to `user_damaged` triggers.
 
+<h5>Protect User</h5>
+
+Applies a protection effect based on a protection factor. This may be more useful then `modify_damage` in most circumstances. 
+The Enchantment Protection Factor (EPF) is used as specified at <https://minecraft.gamepedia.com/Armor#Enchantments>.
+
+```
+(an effect)
+	-effect:"protect_user"
+	-factor: An absolute or modified quantity that modifies the EPF
+```
+
+
 <h3>User Attacked</h3>
 
-Fired whenever an entity attacks the user. 
+Fired whenever an entity attacks the user (a `user_damaged` trigger will apply at some indeterminate time in relation to this trigger)   
 
 ```
 (a trigger)
@@ -760,6 +792,93 @@ Strike Source:
 	...
 ```
 
+<h3>Projectile Fired</h3>
+
+Applies when a projectile weapon or trident fires a projectile. There are no additional conditions associated with this trigger
+
+```
+(a trigger)
+	-trigger:"projectile_fired"
+	...
+```
+
+<h4>Applicable Effects</h4>
+
+<h5>Modify Power</h5>
+
+Modifies the power of the projectile, 
+
+```
+(an effect)
+	-effect:"modify_power"
+	-modifier: An absolute or modified quantity to add to the power tag of the projectile
+```
+
+<h5>Ignite Projectile</h5>
+
+Same same as `ignite_user`, `ignite_target`, and `ignite_source` effects, but applies to the projectile. 
+
+```
+(an effect)
+	-effect:"ignite_projectile"
+	...
+```
 
 
+<h2>Vanilla Datapack Additions</h2>
 
+The following files are proposed to be added to the vanilla datapack, to transition from the old system to the system applicable in this document (see the vanilla subfolder):
+
+```
+(root)
+	/minecraft
+		/enchantments
+			/sharpness.json
+			/smite.json
+			/bane_of_arthopods.json
+			/protection.json
+			/projectile_protection.json
+			/blast_protection.json
+			/fire_protection.json
+			/feather_falling.json
+			/efficiency.json
+			/silk_touch.json
+			/fortune.json
+			/looting.json
+			/fire_aspect.json
+			/sweeping_edge.json
+			/aqua_affinity.json
+			/respiration.json
+			/power.json
+			/punch.json
+			/infinity.json
+			/flame.json
+			/mending.json
+			/piercing.json
+			/multishot.json
+			/quickdraw.json
+			/frost_walker.json
+			/depth_strider.json
+			/lure.json
+			/luck_of_the_sea.json
+			/loyalty.json
+			/impaling.json
+			/riptide.json
+			/channelling.json
+			/thorns.json
+			/unbreaking.json
+			/vanishing_curse.json
+			/binding_curse.json
+		/tags
+			/enchantments
+				/curse.json
+				/protection.json
+				/sharpness.json
+				/thorns.json
+			/entity_types
+				/undead.json
+				/aquatic.json
+				/arthropod.json
+			/items
+				
+```

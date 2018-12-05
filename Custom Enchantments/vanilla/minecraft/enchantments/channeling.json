@@ -1,0 +1,31 @@
+{
+	"name":{"translate":"enchantments.minecraft.channeling"},
+	"description":{"translate":"enchantments.minecraft.channeling.description"},
+	"weight":1,
+	"max_level":1,
+	"max_table_level":1,
+	"enchanting_level_slot":11,
+	"mutex_enchantments":["minecraft:riptide"],
+	"triggers":{
+		"main":{
+			"trigger":"entity_attacked",
+			"conditions":[
+				{
+					"condition":"damage",
+					"damage_type":{
+						"is_projectile":true
+					}
+				},
+				{
+					"condition":"weather",
+					"weather":"storm"
+				}
+			],
+			"effects":[
+				{
+					"effect":"strike_target"
+				}
+			]
+		}
+	}
+}

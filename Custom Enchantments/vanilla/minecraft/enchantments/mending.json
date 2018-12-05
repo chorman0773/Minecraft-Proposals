@@ -1,0 +1,13 @@
+{
+	"name":{"translate":"enchantments.minecraft.mending"},
+	"description":{"translate":"enchantments.minecraft.mending.description"},
+	"weight":2,
+	"max_level":1,
+	"triggers":{
+		"helper":{
+			"trigger":"none"
+		}
+	},
+	"applicable_items":["#minecraft:damageable"],
+	"mutex_enchantments":["minecraft:infinity"]
+}

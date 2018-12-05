@@ -469,7 +469,7 @@ Joins a set of subconditions with the logical `and` operator. Passes if each cha
 
 <h4>Disjunction</h4>
 
-Joins a set of subconditions with the logical `or` operator. Passes if any chained condition passes. The chained conditions are evaluated in a succeed-fast short-circuit manner. As soon as one chained condition succeeds, no other conditions are evaluated, and the disjunction fails. 
+Joins a set of subconditions with the logical `or` operator. Passes if any chained condition passes. The chained conditions are evaluated in a succeed-fast short-circuit manner. As soon as one chained condition succeeds, no other conditions are evaluated, and the disjunction succeeds. 
 
 ```
 (a condition)

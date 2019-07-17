@@ -93,7 +93,7 @@ An enchantment is ill-formed if one of the following conditions is met:
 * A trigger defined has an invalid trigger name
 * A condition defined by a trigger has an invalid condition name
 * An effect defined has an invalid effect name
-* A quantity which expects an invariant value neither a constant, the enchantment level,  a composite value composed of such quantities, or a modified quantity. Any quantity that appears anywhere in an enchantment, except in a `condition` or an `effect`, expects an invariant value. 
+* A quantity which expects an invariant value is neither a constant, the enchantment level,  a composite value composed of such quantities, or a modified quantity. Any quantity that appears anywhere in an enchantment, except in a `condition` or an `effect`, expects an invariant value. 
 * A quantity uses a function which does not exist
 * Any required field is omitted at any level. 
 

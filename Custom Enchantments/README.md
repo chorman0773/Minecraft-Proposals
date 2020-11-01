@@ -5,7 +5,7 @@
 With the introduction of Datapacks, Map-makers and server operators gained a powerful tool to change the user experience without adding modifications. 
 However, even with this, many features still require modifications to implement, and many are non-trivial. Implementing Custom Enchantments is especially difficult, even with modifications (I have experience with this, having written a custom enchantment system). This proposal enables server operators and map-makers to add custom enchantments in vanilla, as well as to easily add custom enchantments to modded servers/clients. 
 
-The proposed syntax is defined in [CustomEnchantments.md](https://github.com/chorman0773/Minecraft-Proposals/blob/master/Custom%20Enchantments/CustomEnchantments.md). 
+The proposed syntax is defined in [CustomEnchantments.md](CustomEnchantments.md). 
 
 The proposal has 4 parts:
 
@@ -16,9 +16,12 @@ The proposal has 4 parts:
 
 ## Synopsis ##
 
-[CustomEnchantments.md](https://github.com/chorman0773/Minecraft-Proposals/blob/master/Custom%20Enchantments/CustomEnchantments.md): The primary proposal document. 
+[CustomEnchantments.md](CustomEnchantments.md): The primary proposal document. 
 
-[vanilla](https://github.com/chorman0773/Minecraft-Proposals/tree/master/Custom%20Enchantments/vanilla): The folder containing the proposed additions to the Vanilla Datapack. 
+[vanilla](vanilla): The folder containing the proposed additions to the Vanilla Datapack. 
 
+[NonVanillaExtensions.md](NonVanillaExtensions.md): Extensions which are not required to appear in a vanilla implementation
+
+[SendingServerEnchantments.md](SendingServerEnchantments.md): A mechanism for sending custom enchantments, including those implemented using mods, to clients. 
 
 

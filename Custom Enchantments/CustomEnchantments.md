@@ -238,7 +238,7 @@ This is provided to make it easier to define the function m(x-1)+b, for m is the
 
 Generates a random number in [`min`,`max`). 
 
-<h4>Handling Integers vs. Real Numbers</h4>
+#### Handling Integers vs. Real Numbers
 All values considered here assume that the result is a real number. However, some places quantities are used expects integers. If the result of a quantity is not an integer where one is expected, then the value given is the result after discarding the fractional component. 
 
 ### Enchantment Structure ###
@@ -424,7 +424,7 @@ With the second sword, the Assassinate effect applies first. If it does activate
 
 These conditions may appear in any trigger, and always have meaning. These usually do not check a particular entity, or check the user entity (the entity with the enchanted item). 
 
-#### Conjunction ####
+#### Conjunction
 
 Joins a set of subconditions with the logical `and` operator. Passes if each chained condition passes. The chained conditions are evaluated in fail-fast short-circuit manner. As soon as one chained condition fails, no other conditions are evaluated, and the conjunction condition fails.
 
@@ -435,7 +435,7 @@ Joins a set of subconditions with the logical `and` operator. Passes if each cha
     	-(a condition)
 ```
 
-#### Disjunction ####
+#### Disjunction
 
 Joins a set of subconditions with the logical `or` operator. Passes if any chained condition passes. The chained conditions are evaluated in a succeed-fast short-circuit manner. As soon as one chained condition succeeds, no other conditions are evaluated, and the disjunction succeeds. 
 
@@ -446,7 +446,7 @@ Joins a set of subconditions with the logical `or` operator. Passes if any chain
 		-(a condition)
 ```
 
-#### Negation ####
+#### Negation
 
 Applies the logical `negation` operator to a chained subcondition. Passes if the chained subcondition fails. The direct chained condition may not be a `negation` condition.  
 
@@ -456,7 +456,7 @@ Applies the logical `negation` operator to a chained subcondition. Passes if the
 	-chained: (a condition)
 ```
 
-#### Random Chance ####
+#### Random Chance
 
 Passes randomly based on a biased chance. If the chance is at least 1, the condition is not evaluated, and succeeds unconditionally. The chance may not be less than 0.
 
@@ -466,7 +466,7 @@ Passes randomly based on a biased chance. If the chance is at least 1, the condi
 	-chained: A quantity which results in a real number in (0,1]. If a random number is less than this value, then the condition passes. 
 ```
 
-#### First Trigger ####
+#### First Trigger
 
 Triggers if this particular event has not be handled by the same enchantment on a different item. 
 
@@ -476,7 +476,7 @@ Triggers if this particular event has not be handled by the same enchantment on 
 ```
 
 
-#### In Biome ####
+#### In Biome
 
 Checks if the biome the user is in meets certain criteria
 
@@ -492,7 +492,7 @@ Checks if the biome the user is in meets certain criteria
 		-has_snow: Checks if the biome can snow or cannot.
 ```
 
-#### Weather ####
+#### Weather
 
 Checks the current weather
 
@@ -502,7 +502,7 @@ Checks the current weather
 	-weather: The weather that must be occuring, or a list of such. If a list is provided, passes if the weather is any of those weathers. Acceptable values are "rain", "storm", and "clear". 
 ```
 
-#### In Block ####
+#### In Block
 
 Checks if the user is in a particular type of block. Specifically checks if at least 1 of the 8 blocks the user can be inside of matches
 
@@ -512,11 +512,21 @@ Checks if the user is in a particular type of block. Specifically checks if at l
 	-block_state: The block state to match against. Same as similar block_state objects used by advancement criteria
 ```
 
-### Global Effects ####
+#### Predicate
+
+Checks if the user passes a particular predicate.
+
+```
+(a condition)
+        -condition:"predicate"
+	-predicate: The name of the predicate to evaluate
+```
+
+### Global Effects
 
 These effects, like the global conditions, can be applied regardles of the trigger being used. These usually only apply to the user. 
 
-#### Add User Status ####
+#### Add User Status
 
 Adds a particular status effect to the user. 
 
@@ -531,9 +541,9 @@ Adds a particular status effect to the user.
 	-hide_particles: Set to true if the particles are hidden. Optional, defaults to false.
 ```
 
-#### Heal User ####
+#### Heal User
 
-Heals the user by a particular ammount. Undead entities recieve *1.5 damage instead.
+Heals the user by a particular ammount. Undead entities recieve \*1.5 damage instead.
 
 ```
 (an effect)
@@ -541,9 +551,9 @@ Heals the user by a particular ammount. Undead entities recieve *1.5 damage inst
 	-amount: The amount (in half hearts) to heal the user by. Can be absolute or modified
 ```
 
-#### Harm User ####
+#### Harm User
 
-Inflicts an amount of damage to the user. Undead entities heal by *0.67 instead, unless the entity is immune.
+Inflicts an amount of damage to the user. Undead entities heal by \*0.67 instead, unless the entity is immune.
 
 ```
 (an effect)
@@ -560,7 +570,7 @@ Inflicts an amount of damage to the user. Undead entities heal by *0.67 instead,
 		-is_projectile: True if this is projectile damage. Defaults to false.
 ```
 
-#### Damage User ####
+#### Damage User
 
 Inflicts damage of a particular type to the user. 
 
@@ -579,7 +589,7 @@ Inflicts damage of a particular type to the user.
 		-is_projectile: True if this is projectile damage. Defaults to false.
 ```
 
-#### Ignite User ####
+#### Ignite User \\
 
 Sets or increases the fire ticks of the user, unless the user is immune to fire. 
 
@@ -589,7 +599,7 @@ Sets or increases the fire ticks of the user, unless the user is immune to fire.
 	-time: The number of fire ticks to add to the user. Can be absolute or modified
 ```
 
-#### Strike User ####
+#### Strike User
 
 If the user is exposed to the sky, strikes the user with lightning. 
 
@@ -598,7 +608,7 @@ If the user is exposed to the sky, strikes the user with lightning.
 	effect:"strike_user"
 ```
 
-#### Run Function ####
+#### Run Function
 
 Runs a given function as though the server executed execute as *user* *position (see below)* run function *function*
 
@@ -616,11 +626,11 @@ Runs a given function as though the server executed execute as *user* *position 
 * for any other trigger, *position* is `at` *user*.
 
 Notes:
-* The function is to be executed with permission level 4. On servers that use Spigot Permission system, the function is executed with all permissions defined on the server. On servers that use the Gac14 Permission Management System, the function is run in an elevated context. It is unspecified how any other permission system acts in response to this trigger. See associated documentation for each permission system on the precise effects of running the function this way. On single-player, the function is run as though cheats are enabled. 
+* It is intended that the function be run with the maximum permissions possible for the current server software. In the case of the vanilla server, or vanilla permissions, this means the command is run with permission level 4 (reguardless of operatorPermissionLevel or the permission level of *user*). 
 * The execute command is for exposition only.  It is unspecified how this function is run, but the command must be run as the user, and positioned as above. 
 * The command chain max applies to the function as a separate chain, even if the trigger applied as the result of a command.  
 
-#### Repair Item ####
+#### Repair Item
 
 Repairs the item affected by the enchantment. 
 
@@ -630,7 +640,7 @@ Repairs the item affected by the enchantment.
 	-value: A quantity which resolves to an integer number of durability points to repair the item by. May not be negative
 ```
 
-#### Damage Item ####
+#### Damage Item
 
 Damages the item affected by the enchantment
 
@@ -641,7 +651,7 @@ Damages the item affected by the enchantment
 ```
 
 
-### Null Trigger ###
+### Null Trigger
 
 Event is never fired. Can be useful for writing vanilla enchantments that require internal support, as all enchantments defined using this proposal require either at least one trigger, or at least one attribute modifier
 
@@ -650,7 +660,7 @@ Event is never fired. Can be useful for writing vanilla enchantments that requir
 	-trigger:"null"
 ```
 
-### Tick Trigger ###
+### Tick Trigger
 
 Event fired 20 times per second, or after a set period of time
 
@@ -660,7 +670,8 @@ Event fired 20 times per second, or after a set period of time
 	-delay: The number of ticks before the next event is fired. Optional, defaults to 1.
 ```
 
-### Item Equipped ###
+
+### Item Equipped
 
 Event fired when an item with the enchantment is added to an applicable item slot, except from another applicable item slot of the same entity.  
 
@@ -669,7 +680,7 @@ Event fired when an item with the enchantment is added to an applicable item slo
 	-trigger:"equipped"
 ```
 
-### Item Unequipped ###
+### Item Unequipped
 
 Event fired when the item with the enchantment is removed from an applicable item slot, unless it is added to another applicable item slot of the same entity. 
 
@@ -678,7 +689,7 @@ Event fired when the item with the enchantment is removed from an applicable ite
 	-trigger:"unequipped"
 ```
 
-### Entity Attacked ###
+### Entity Attacked
 
 Fired when the user deals damage to an entity. 
 
@@ -687,11 +698,11 @@ Fired when the user deals damage to an entity.
 	-trigger:"entity_attacked"
 ```
 
-#### Applicable Conditions ####
+#### Applicable Conditions
 
 The following conditions apply to `entity_attacked` triggers.
 
-##### Target Entity #####
+##### Target Entity
 
 Checks the entity that was dealt damage. 
 
@@ -701,7 +712,7 @@ Checks the entity that was dealt damage.
 	-entity: The Json representation of an entity. Same as similar fields in enchantment criteria. 
 ```
 
-##### Target Entity Type #####
+##### Target Entity Type
 
 Checks the entity type of the damaged entity.
 
@@ -711,11 +722,11 @@ Checks the entity type of the damaged entity.
 	-entity_types: A list of entity types. Can contain any number of entity tags, without the # prefix.
 ```
 
-#### Applicable Effects ####
+#### Applicable Effects
 
 The following effects can be applied from `entity_attacked` triggers
 
-##### Heal Target #####
+##### Heal Target
 
 Same as similar `heal_user` effect, except applies to the attacked entity rather then the user.  
 
@@ -725,7 +736,7 @@ Same as similar `heal_user` effect, except applies to the attacked entity rather
 	...
 ```
 
-##### Harm Target #####
+##### Harm Target
 
 Same as similar `harm_user` effect, except applies to the attacked entity rather then the user. 
 
@@ -735,7 +746,7 @@ Same as similar `harm_user` effect, except applies to the attacked entity rather
 	...
 ```
 
-##### Damage Target #####
+##### Damage Target
 
 Same as similar `damage_user` effect, except applies to the attacked entity rather then the user.
 
@@ -745,7 +756,7 @@ Same as similar `damage_user` effect, except applies to the attacked entity rath
 	...
 ```
 
-##### Add Damage #####
+##### Add Damage
 
 Modifies the damage dealt by an additive factor
 
@@ -755,7 +766,7 @@ Modifies the damage dealt by an additive factor
 	-amount: The amount to increase the damage by. Can be absolute or modified.
 ```
 
-##### Modify Damage #####
+##### Modify Damage
 
 Modifies the damage dealt by a multiplicative factor
 
@@ -765,7 +776,7 @@ Modifies the damage dealt by a multiplicative factor
 	-modifier: The ammount to modify the damage by. Can be absolute or modified.
 ```
 
-##### Ignite Target #####
+##### Ignite Target
 
 Adds an amount of fire ticks to the target of the attack.  Similar to the `ignite_user` effect.
 
@@ -775,7 +786,7 @@ Adds an amount of fire ticks to the target of the attack.  Similar to the `ignit
 	...
 ```
 
-##### Strike Target #####
+##### Strike Target
 
 If the target is exposed to the sky, strikes the target with lightning. Similar to the `strike_user` effect.
 
@@ -786,7 +797,7 @@ If the target is exposed to the sky, strikes the target with lightning. Similar 
 ```
 
 
-### User Damaged ###
+### User Damaged
 
 Fired whenever a source deals damage to the user.
 
@@ -795,11 +806,11 @@ Fired whenever a source deals damage to the user.
 	-trigger:"user_damaged"
 ```
 
-#### Applicable Conditions ####
+#### Applicable Conditions
 
 The following conditions can be applied from `user_damaged` triggers. 
 
-##### Damage Source #####
+##### Damage Source
 
 Checks the source of the damage
 
@@ -811,17 +822,17 @@ Checks the source of the damage
 	-damage_type: The type of damage dealt. Same as similar damage_type tags used in advancement criteria.
 ```
 
-#### Applicable Effects ####
+#### Applicable Effects
 
-##### Add Damage #####
+##### Add Damage
 
 The `add_damage` effect applies to `user_damaged` triggers.
 
-##### Modify Damage #####
+##### Modify Damage
 
 The `modify_damage` effect applies to `user_damaged` triggers.
 
-##### Reduce Damage #####
+##### Reduce Damage
 
 Applies a protection effect based on a protection factor. This may be more useful then `modify_damage` in most circumstances. 
 The Enchantment Protection Factor (EPF) is used as specified at <https://minecraft.gamepedia.com/Armor#Enchantments>.
@@ -833,7 +844,7 @@ The Enchantment Protection Factor (EPF) is used as specified at <https://minecra
 ```
 
 
-### User Attacked ###
+### User Attacked
 
 Fired whenever an entity attacks the user (a `user_damaged` trigger will apply at some indeterminate time in relation to this trigger)   
 
@@ -842,23 +853,23 @@ Fired whenever an entity attacks the user (a `user_damaged` trigger will apply a
 	-trigger:"user_attacked"
 ```
 
-#### Applicable Conditions ####
+#### Applicable Conditions
 
-##### Source Entity #####
+##### Source Entity
 
 The `entity_data` condition applies to `user_attacked` triggers. Checks the source entity rather then the target entity.
 
-##### Source Entity Type #####
+##### Source Entity Type
 
 The `entity_type` condition applies to `user_attacked` triggers. Checks the source entity rather then the target entity.
 
-##### Damage Source #####
+##### Damage Source
 
 The `damage_source` condition applies to `user_attacked` triggers. 
 
-#### Applicable Effects ####
+#### Applicable Effects
 
-##### Heal/Harm/Damage Source #####
+##### Heal/Harm/Damage Source
 
 Heals/Harms/Damages the source entity by a given amount. Similar to the `heal_user`, `harm_user`, and `damage_user` effects respectively.
 
@@ -886,7 +897,7 @@ Damage Source:
 	...
 ```
 
-##### Ignite/Strike Source #####
+##### Ignite/Strike Source
 
 Ignites/Strikes the source with lighting. Similar to the `ignite_user` and `strike_user` effects, respectively.
 
@@ -906,7 +917,7 @@ Strike Source:
 	...
 ```
 
-### Projectile Fired ###
+### Projectile Fired
 
 Applies when a projectile weapon or trident fires a projectile. There are no additional conditions associated with this trigger
 
@@ -916,9 +927,9 @@ Applies when a projectile weapon or trident fires a projectile. There are no add
 	...
 ```
 
-#### Applicable Effects ####
+#### Applicable Effects
 
-##### Modify Power #####
+##### Modify Power
 
 Modifies the power of the projectile, 
 
@@ -928,7 +939,7 @@ Modifies the power of the projectile,
 	-modifier: An absolute or modified quantity to add to the power tag of the projectile
 ```
 
-##### Ignite Projectile #####
+##### Ignite Projectile
 
 Same as `ignite_user`, `ignite_target`, and `ignite_source` effects, but applies to the projectile. 
 
@@ -938,7 +949,7 @@ Same as `ignite_user`, `ignite_target`, and `ignite_source` effects, but applies
 	...
 ```
 
-### Item Damaged ###
+### Item Damaged
 
 Applies whenever the item is damaged. This applies individually for each point of damage. 
 
@@ -948,9 +959,9 @@ Applies whenever the item is damaged. This applies individually for each point o
 	...
 ```
 
-#### Applicable Conditions ####
+#### Applicable Conditions
 
-##### Item #####
+##### Item
 
 Checks the item that was damaged, before it was damaged. 
 
@@ -960,9 +971,9 @@ Checks the item that was damaged, before it was damaged.
 	-item: An item predicate. Same as similar predicates for advancements.
 ```
 
-#### Applicable Effects ####
+#### Applicable Effects
 
-##### Negate Damage #####
+##### Negate Damage
 
 Stops the item from losing durability
 
@@ -971,7 +982,7 @@ Stops the item from losing durability
 	-effect:"negate_damage"
 ```
 
-## Vanilla Datapack Additions ##
+## Vanilla Datapack Additions
 
 The following files are proposed to be added to the vanilla datapack, to transition from the old system to the system applicable in this document (see the vanilla subfolder):
 
